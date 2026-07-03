@@ -1,0 +1,83 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
+8925,MCRO,1,1-Silver Spring-Friendship Heights,Rte 1 operates Monday-Sunday,3,,808000,FFFFFF
+8927,MCRO,100,100-Shady Grove-Germantown Transit,Rte 100 operates Monday-Sunday,3,,008080,FFFFFF
+8928,MCRO,101,101-Lakeforest-Medical Ctr,Rte 101 operates Monday-Friday,3,,00FFFF,FFFFFF
+8929,MCRO,11,11-Silver Spring-Friendship Heights,Rte11operate AM-SS-FH-PM-FH-SS,3,,DF0070,FFFFFF
+8930,MCRO,12,12-Silver Spring-Takoma,Rte 12 operates Monday-Sunday,3,,FF80C0,FFFFFF
+8932,MCRO,13,13-Silver Spring-Takoma,Rte 13 operates Monday-Friday,3,,0000FF,FFFFFF
+8933,MCRO,14,14-Silver Spring-Takoma,Rte14 operates Monday-Saturday,3,,0000FF,FFFFFF
+8934,MCRO,15,15-Silver Spring-Takoma Langley,Rte 15 operates Monday-Sunday,3,,0000FF,FFFFFF
+8935,MCRO,16,16-Silver Spring-Takoma,Rte 16 operates Monday-Sunday,3,,0000FF,FFFFFF
+8936,MCRO,17,17-Silver Spring-Takoma Langley,Rte 17 operates Monday-Sunday,3,,0000FF,FFFFFF
+8937,MCRO,18,18-Silver Spring -Takoma Langley,Rte 18 operates Monday-Sunday,3,,0000FF,FFFFFF
+8938,MCRO,19,19-Silver Spring-Northwood,Rte 19 operates Monday-Friday,3,,0000FF,FFFFFF
+8939,MCRO,2,2-Silver Spring-Lyttonsville,Rte 2 Monday-Sunday,3,,C0DCC0,FFFFFF
+8940,MCRO,20,20-Silver Spring-Hillandale,Rte 20 operates Monday-Sunday,3,,0000FF,FFFFFF
+8946,MCRO,21,21-Silver Spring-Briggs Chaney P&R,Rte 21 operates Monday-Friday,3,,0000FF,FFFFFF
+8954,MCRO,22,22-Silver Spring-Hillandale,Rte 22 operates Monday-Friday,3,,0000FF,FFFFFF
+8955,MCRO,23,23-Friendship Hghts-Sibley Hospital,Rte 23 operates Monday-Friday,3,,0000FF,FFFFFF
+8956,MCRO,24,24-Hillandale-Takoma,Rte 24 operates Monday-Friday,3,,0000FF,FFFFFF
+8957,MCRO,25,25-Takoma Station-Takoma Langley,Rte 25 operates Monday-Friday,3,,0000FF,FFFFFF
+8958,MCRO,26,26-Montgomery Mall-Glenmont,Rte 26 operates Monday-Sunday,3,,0000FF,FFFFFF
+8959,MCRO,27,27-Tech Rd-Hillandale,Rte 27 Monday-Sunday,3,,800000,FFFFFF
+8960,MCRO,28,28-FREE-Silver Spring VanGo Shuttle,Rte 28 operates Monday-Saturday,3,,0000FF,FFFFFF
+8961,MCRO,29,29-Bethesda-GlenEcho-FriendshpHghts,Rte 29 operates Monday-Friday,3,,0000FF,FFFFFF
+8965,MCRO,30,30-Bethesda-Medical Center,Rte 30 operates Monday-Friday,3,,0000FF,FFFFFF
+8966,MCRO,301,301-Potomac-Rockville,Rte 301 operates Monday-Sunday,3,,008000,FFFFFF
+8967,MCRO,31,31-Wheaton-Glenmont,Rte 31 operates Monday-Friday,3,,0000FF,FFFFFF
+8968,MCRO,32,32-Bethesda-Naval Ship R&D Center,Rte 32 operates Monday-Friday,3,,0000FF,FFFFFF
+8969,MCRO,33,33-Glenmont-Medical Center,Rte 33 operates Monday-Friday,3,,8A6F91,FFFFFF
+8970,MCRO,34,34-Bethesda-Wheaton,Rte 34 operates Monday-Sunday,3,,0000FF,FFFFFF
+8971,MCRO,36,36-Bethesda-Potomac-via Hillandale,Rte 36 operates Monday-Friday,3,,0000FF,FFFFFF
+8972,MCRO,37,37-Potomac-Wheaton Metro Station,Rte 37 operates Monday-Friday,3,,1D9260,FFFFFF
+8973,MCRO,38,38-Wheaton-North Bethesda Station,Rte 38 operates Monday-Sunday,3,,636F11,FFFFFF
+8974,MCRO,39,39-Glenmont-Briggs Chaney P&R,Rte 39 operates Monday-Friday,3,,800000,FFFFFF
+8975,MCRO,4,4-Silver Spring-Wheaton,Rte 4 Monday-Friday,3,,00FF00,FFFFFF
+8976,MCRO,40,40-Wheaton-Mont.College,Rte 40 operates Monday-Sunday,3,,A6CAF0,FFFFFF
+8977,MCRO,41,41-Aspen Hill-Wheaton,Rte 41 operates Monday-Sunday,3,,0000FF,FFFFFF
+8978,MCRO,42,42-Montgomery Mall-North Bethesda,Rte 42 operates Monday-Sunday,3,,A6CAF0,FFFFFF
+8979,MCRO,43,43-Shady Grove-Traville Transit Ctr,Rte43 operates Monday-Saturday,3,,800080,FFFFFF
+8980,MCRO,44,44-Twinbrook-Rockville,Rte 44 operates Monday-Friday,3,,0000FF,FFFFFF
+8981,MCRO,45,45-RockvRegional/RockvSenior/Twinb,Rte45 operates Monday-Saturday,3,,800040,FFFFFF
+8982,MCRO,46,46-Mont.College-Rockv-Medical Ctr,Rte 46 operates Monday-Sunday,3,,AE92E4,FFFFFF
+8983,MCRO,47,47-Rockville-Mont. Mall-Bethesda,Rte 47 operates Monday-Sunday,3,,008080,FFFFFF
+8984,MCRO,48,48-Wheaton-Rockville,Rte 48 operates Monday-Sunday,3,,800080,FFFFFF
+8985,MCRO,49,49-Rockville-Glenmont,Rte 49 operates Monday-Sunday,3,,00009F,FFFFFF
+8986,MCRO,5,5-Silver Spring-Twinbrook Station,Rte 5 Monday-Sunday,3,,FFFF00,FFFFFF
+8987,MCRO,51,51-Glenmont-Norbeck P&R,Rte 51 operates Monday-Friday,3,,A6DF7B,FFFFFF
+8988,MCRO,52,52-Olney-MedStar Mont.Med-Rockv.,Rte 52 operates Monday-Friday,3,,8080C0,FFFFFF
+8989,MCRO,53,53-Shady Grove-Glenmont,Rte 53 operates Monday-Friday,3,,FFFF80,FFFFFF
+8990,MCRO,54,54-Rockville-Lakeforest,Rte 54 operates Monday-Sunday,3,,FFFF00,FFFFFF
+8991,MCRO,55,55-Rockville-Germantown Transit Ctr,Rte 55 operates Monday-Sunday,3,,FF4FA7,FFFFFF
+8992,MCRO,56,56-Rockville-Lakeforest,Rte 56 operates Monday-Sunday,3,,FFBD9D,FFFFFF
+8993,MCRO,57,57-Shady Grove-Lakeforest,Rte 57 operates Monday-Sunday,3,,FF8000,FFFFFF
+8994,MCRO,58,58-Shady Grove-Lakeforest,Rte 58 operates Monday-Sunday,3,,804000,FFFFFF
+8995,MCRO,59,59-Rockville-Montgomery Village,Rte 59 operates Monday-Sunday,3,,008000,FFFFFF
+8996,MCRO,6,6-Parkside-Grosvenor-Mont. Mall,Rte 6 operates Monday-Friday,3,,00FFFF,FFFFFF
+8997,MCRO,60,60-Shady Grove-Montgomery Village,Rte60operate AM-MS-SG-PM-SG-MV,3,,004000,FFFFFF
+8998,MCRO,61,61-Shady Grove-Germantown Transit,Rte 61 operates Monday-Sunday,3,,000080,FFFFFF
+8999,MCRO,63,63-Rockville-Shady Grove,Rte 63 operates Monday-Friday,3,,FF0000,FFFFFF
+9000,MCRO,64,64-Shady Grove-Montgomery Village,Rte 64 operates Monday-Sunday,3,,008080,FFFFFF
+9001,MCRO,65,65-Shady Grove-Mont.Village-Express,Rte65operate AM-MS-SG-PM-SG-MV,3,,800080,FFFFFF
+9002,MCRO,66,66-Shady Grove-Traville Transit Ctr,Rte66operate AM-SW-TT-PM-TT-SW,3,,8080C0,FFFFFF
+9003,MCRO,67,67-Shady Grove-Traville Transit Ctr,Rte67operate AM-TT-SW-PM-SW-TT,3,,008040,FFFFFF
+9004,MCRO,7,7-Wheaton-Forest Glen,Rte 7 operates Monday-Friday,3,,FF00FF,FFFFFF
+9005,MCRO,70,70-Germantown-Bethesda EXPRESS,Rte 70 operates Monday-Friday,3,,800080,FFFFFF
+9006,MCRO,71,71-Shady Grove-Kingsview P & R,Rte71operate AM KV-SE-PM-SE-KV,3,,408080,FFFFFF
+9007,MCRO,73,73-Shady Grove-Gateway Center,Rte 73 operates AM-CB-SE-PM-SE,3,,C83775,FFFFFF
+9008,MCRO,74,74-Shady Grove-Germantown Transit,Rte 74 operates Monday-Friday,3,,8000FF,FFFFFF
+9009,MCRO,75,75-ClarksburgCorrectional-Germantwn,Rte 75 operates Monday-Friday,3,,FFC4E1,FFFFFF
+9010,MCRO,76,76-Shady Grove-Poolesville,Rte 76 operates Monday-Friday,3,,804040,FFFFFF
+9011,MCRO,78,78-Shady Grove-Kingsview P & R,Rte78operate AM-KV-SE-PM-SE-KV,3,,FF8080,FFFFFF
+9012,MCRO,79,79-Shady Grove-Clarksburg,Rte79operate AM-CB-SE-PM-SE-CB,3,,808000,FFFFFF
+9013,MCRO,8,8-Silver Spring-Wheaton,Rte 8 operates Monday-Saturday,3,,800080,FFFFFF
+9014,MCRO,81,81-Rockville-North Bethesda,Rte 81 operates Monday-Friday,3,,FF8000,FFFFFF
+9015,MCRO,83,83-GermantownTransit Ctr-Holy Cross,Rte 83 operates Monday-Sunday,3,,54621E,FFFFFF
+9016,MCRO,9,9-Silver Spring-Wheaton,Rte 9 operates Monday-Sunday,3,,00FFFF,FFFFFF
+9017,MCRO,90,90-Shady Grove-Damascus,Rte 90 operates Monday-Friday,3,,A6CAF0,FFFFFF
+9020,MCRO,96,96-Grosvenor-Rock Spring-Montg Mall,Rte 96 operates Monday-Friday,3,,DCB8B8,FFFFFF
+9021,MCRO,97,97-Germantown Transit-Gunners Lake,Rte 97 operates Monday-Sunday,3,,400040,FFFFFF
+9022,MCRO,98,98-Germantown Transit Ctr-Kingsview,Rte 98 operates Monday-Sunday,3,,8080FF,FFFFFF
+9023,MCRO,FLASH,FLASH-Silver Spring-Burtonsville,Rte 501 operates Monday-Sunday,3,,008000,FFFFFF
+9027,MCRO,LIME,Lime-Shady Grove-Traville Transit,Rte 122 Operates Monday- Sunday,3,,80FF80,FFFFFF
+9028,MCRO,PINK,Pink-Shady Grove-Traville Transit,Rte 121 operates Monday-Sunday,3,,FF00FF,FFFFFF
