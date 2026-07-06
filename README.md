@@ -1,9 +1,9 @@
-# Bus connection probability
+# Bus connection success rate
 
-In this repository I create a binomial probability model that calculates the probability of arriving at a station and catching a bus. Specifically, this model does the following:
-1. Find the nearest stations to each given station and select which out of these has the highest number of unique routes ("desired" station): `2.0-desired-stations.R`
-2. Take each given station and a time span (peak vs off-peak hours) and search for departures from the given toward the "desired" station within the next 10 minutes of every minute within the time span: `3.0-probability-model.R`
-3. Count every minute where there is at least one departure meeting this criteria, as a "success", and divide the total number of successes by the total number of minutes tested: `3.0-probability-model.R`
+In this repository I create a model that calculates the success rate for, in a given time span, randomly arriving at a station and catching a bus to a "useful" station within 10 minutes. Specifically, this model does the following:
+1. Find the nearest stations to each given station and select which out of these has the highest number of unique routes ("desirable direction")
+2. Take each given station and a time span (peak vs off-peak hours) and search for departures from the given station toward the "desirable direction" station within the next 10 minutes of every minute within the time span (1 + 2: [2.0-desirable-directions.R](https://github.com/froggiest/Bus-Network-Analysis/blob/main/01-ingestion/scripts/2.0-desirable-directions.R))
+3. Count every minute where there is at least one departure meeting this criteria as a "success", and divide the total number of successes by the total number of minutes tested ([`3.0-success-rate-calculation.R`](https://github.com/froggiest/Bus-Network-Analysis/blob/main/03-analysis/scripts/3.0-success-rate-calculation.R))
 
 ### Tools Used
 
