@@ -1,0 +1,362 @@
+---
+title: "Visualizations and EDA"
+author: "JB"
+message: false  
+warning: false
+format:
+  html:
+    code-overflow: wrap
+editor: visual
+---
+
+# Libraries & datasets
+
+```{r}
+library(tidyverse)
+library(lubridate)
+
+probability_table_all <- read_csv("bus_success_rates_by_station.csv")
+distance_table <- read_csv("distance_between_each_station.csv")
+
+weekday_station_times <- read_csv("weekday_station_times.csv")
+saturday_station_times <- read_csv("saturday_station_times.csv")
+sunday_station_times <- read_csv("sunday_station_times.csv")
+```
+
+# Data adjustments
+
+Clean overall datasets and station names
+
+```{r}
+probability_table <- probability_table_all %>% 
+  filter(origin_station != "GROSVENOR STATION") %>% 
+  mutate(
+    station_name_clean = gsub("Station|Transit Center", "", str_to_title(origin_station))
+  ) %>% 
+  relocate(station_name_clean, .after = origin_station) %>% 
+  mutate(
+    difference_am_peak_to_pm_offpeak = weekday_am_peak-weekday_pm_offpeak,
+    diff_weekday_to_saturday_pm_offpeak = weekday_pm_offpeak-saturday_pm_offpeak,
+    diff_weekday_to_sunday_pm_offpeak = weekday_pm_offpeak-sunday_pm_offpeak
+  ) %>% 
+  relocate(difference_am_peak_to_pm_offpeak, .after = difference_am_peak_to_off)
+
+
+distance_table <- distance_table %>% 
+    mutate(
+    station_name_clean = gsub("Station|Transit Center", "", str_to_title(station))
+  ) %>% 
+  relocate(station_name_clean, .after = station)
+
+# make a dataframe with all of the distances between every station
+all_distances <- distance_table %>% 
+  select(-station_name_clean, -station, -total_routes) %>% 
+  pivot_longer(cols = everything()) %>% 
+      mutate(
+    station_name_clean = gsub("Station|Transit Center", "", str_to_title(name))
+  ) %>% 
+  relocate(station_name_clean, .after = name)
+
+
+# add desirable destinations to station times
+weekday_station_times <- left_join(weekday_station_times, probability_table %>% 
+                                     rename_at("origin_station",~"station_name") %>% 
+                                     select(station_name, destination_station, total_routes_origin, station_name_clean)) %>% 
+  filter(!is.na(station_name_clean))
+
+saturday_station_times <- left_join(saturday_station_times, probability_table %>% 
+                                     rename_at("origin_station",~"station_name") %>% 
+                                     select(station_name, destination_station, total_routes_origin, station_name_clean)) %>% 
+  filter(!is.na(station_name_clean))
+
+sunday_station_times <- left_join(sunday_station_times, probability_table %>% 
+                                     rename_at("origin_station",~"station_name") %>% 
+                                     select(station_name, destination_station, total_routes_origin, station_name_clean)) %>% 
+  filter(!is.na(station_name_clean))
+```
+
+Make weeday summaries
+
+```{r}
+summaryweekday <- weekday_station_times %>% 
+  group_by(station_name, station_name_clean, total_routes_origin) %>% 
+  summarise(
+    WKDAY_total_arrivals_departures = n(), # number of times a bus stopped
+    WKDAY_total_trips = n_distinct(trip_id) # number of buses stopping. this is nearly the same thing as above.
+  )
+summarysaturday <- saturday_station_times %>% 
+  group_by(station_name, station_name_clean, total_routes_origin) %>% 
+  summarise(
+    SAT_total_arrivals_departures = n(), # number of times a bus stopped
+    SAT_total_trips = n_distinct(trip_id) # number of buses stopping. this is nearly the same thing as above.
+  )
+summarysunday <- sunday_station_times %>% 
+  group_by(station_name, station_name_clean, total_routes_origin) %>% 
+  summarise(
+    SUN_total_arrivals_departures = n(), # number of times a bus stopped
+    SUN_total_trips = n_distinct(trip_id) # number of buses stopping. this is nearly the same thing as above.
+  )
+
+stations_summary <- left_join(summaryweekday, summarysaturday)
+stations_summary <- left_join(stations_summary, summarysunday)
+```
+
+# Visualizations
+
+## Success rate 
+
+
+### Boxplot
+
+```{r}
+probability_table %>%
+  filter(origin_station != "FOREST GLEN STATION") %>% 
+  ggplot() +
+  geom_boxplot(aes(x = weekday_am_peak)) + 
+  labs(
+    x = "Success rate for catching a bus between 5:30am and 9:30am on a weekday",
+    title = "Weekday morning peak success rate",
+    subtitle = "Excluding Grosvenor Station and Forest Glen Station",
+    caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS"
+  ) +
+  theme(
+    panel.grid = element_line(color = "#ECE8E8"),
+    panel.background = element_rect(color = "#f3a3a3", linewidth = 0.55, fill = "#fff")
+) +
+  scale_x_continuous(breaks = scales::breaks_width(0.05))
+```
+
+### Bar chart
+
+```{r}
+probability_table %>% 
+  ggplot() +
+  geom_bar(aes(x = weekday_am_peak, y = station_name_clean, fill = "Morning peak"), stat = "identity", color = "#fff") +
+    geom_bar(aes(x = weekday_am_offpeak, y = station_name_clean, fill = "Morning off-peak"), stat = "identity", alpha = 0.6, color = "#fff")+
+  labs(
+    x = "Success rate for catching bus within 1-10 minutes",
+    y = "Station name",
+    title = "Weekday morning success rate",
+        caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Morning peak" = "#16DB65",
+      "Morning off-peak" = "#0D2818"
+    ), aesthetics = "fill"
+  ) +
+  theme_light() +
+  theme(
+    axis.line = element_line(linewidth = 0.75, color = "#04471C"),
+    panel.border = element_rect(linewidth = 0.55, color = "#16DB65", fill = "#82EDAD"),
+    panel.grid.major.y = element_line(color = "#E8F9EE"),
+    panel.grid.minor.y = element_line(color = "#C8F4D9"),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    plot.title = element_text(size = 12,face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.ticks = element_blank(),
+    axis.text.y = element_text(face = "bold"),
+    axis.title.y = element_blank()
+  )
+```
+
+
+
+## Bus operation
+
+```{r}
+weekday_station_times %>% 
+  mutate(
+    hour = ifelse(hour(arrival_time) > 24, hour(arrival_time)-24, hour(arrival_time))
+  ) %>% 
+  group_by(hour) %>% 
+  summarise(total_trips = n_distinct(trip_id)) %>% 
+  ggplot() +
+  geom_line(
+    aes(x = hour, total_trips)
+  ) +
+  labs(
+    x = "Hour",
+    y = "Trips in operation",
+    title = "Total Montgomery County buses in operation on a weekday, by hour",
+    caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS"
+  ) +
+  theme(
+    panel.grid = element_line(color = "#E6EBE8"),
+    panel.background = element_rect(color = "#04471C", linewidth = 0.55, fill = "#fff")
+) +
+  # source: https://www.reddit.com/r/rstats/comments/4cqifm/comment/d1kjmit/ + brief debugging with Claude Haiku 4.5 (labels instead of values) :
+  scale_x_continuous(breaks  = seq(0, 23, by = 3), labels =
+                       c("12:00am", "3:00am", "6:00am", "9:00am", "12:00pm", "3:00pm", "6:00pm", "9:00pm")) +
+  scale_y_continuous(breaks = scales::breaks_width(100)) # source: https://stackoverflow.com/a/74639529
+
+```
+
+
+## Distances
+
+### Distribution of distances
+
+```{r}
+all_distances %>% 
+  ggplot () +
+  geom_density(aes(x = value)) +
+  geom_segment(
+    x = mean(all_distances$value),
+    y = 0.085,
+    xend = mean(all_distances$value),
+    yend = 0
+  ) +
+  geom_text(
+    aes(x = mean(all_distances$value)+1,
+        y = 0.085,
+        label = "Mean")
+  ) +
+  # median line
+  geom_segment(
+    x = median(all_distances$value),
+    y = 0.105,
+    xend = median(all_distances$value),
+    yend = 0
+  ) +
+  geom_text(
+    aes(x = median(all_distances$value)+1,
+        y = 0.11,
+        label = "Median")
+  ) +
+  labs(
+    x = "Distance (miles) between each station",
+    title = "Distribution of distance between stations",
+    caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS"
+  ) +
+  theme(
+    panel.grid = element_line(color = "#ECE8E8"),
+    panel.background = element_rect(color = "#f3a3a3", linewidth = 0.55, fill = "#fff"),
+    axis.title.y = element_blank()
+    ) +
+  scale_x_continuous(breaks = scales::breaks_width(3)) # source: https://stackoverflow.com/a/74639529 
+```
+
+### Distance bar chart (stations)
+
+```{r}
+probability_table %>% 
+  ggplot () +
+  geom_bar(aes(x = distance, y = station_name_clean), fill = "#04471C", stat = "identity") +
+  labs(
+    x = "Distance (miles) to nearest station serving most routes",
+    title = "Distance between origin stations and 'desirable destination' stations",
+    caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS"
+  ) +
+    theme_light() +
+  theme(
+    axis.line = element_line(linewidth = 0.75, color = "#04471C"),
+    panel.border = element_rect(linewidth = 0.55, color = "#16DB65", fill = "#82EDAD"),
+    panel.grid.major.y = element_line(color = "#E8F9EE"),
+    panel.grid.minor.y = element_line(color = "#C8F4D9"),
+    plot.title = element_text(size = 12, face = "bold"),
+    plot.caption = element_text(size = 8, face = "bold"),
+    axis.title = element_text(size = 10, face = "bold"),
+    axis.ticks = element_blank(),
+    axis.text.y = element_text(face = "bold"),
+    axis.title.y = element_blank()
+) + 
+  scale_x_continuous(breaks = scales::breaks_width(1))
+  
+```
+
+## Total buses (stations)
+
+```{r}
+stations_summary %>% 
+  ggplot () +
+  geom_bar(aes(x = total_routes_origin, y = station_name_clean), fill = "#04471C", stat = "identity") +
+  labs(
+    x = "Total bus routes (Metrobus & Ride On) served by station",
+    title = "Stations by total bus routes served",
+    caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS"
+  ) +
+    theme_light() +
+  theme(
+    axis.line = element_line(linewidth = 0.75, color = "#04471C"),
+    panel.border = element_rect(linewidth = 0.55, color = "#16DB65", fill = "#82EDAD"),
+    panel.grid.major.y = element_line(color = "#E8F9EE"),
+    panel.grid.minor.y = element_line(color = "#C8F4D9"),
+    plot.title = element_text(size = 12, face = "bold"),
+    plot.caption = element_text(size = 8, face = "bold"),
+    axis.title = element_text(size = 10, face = "bold"),
+    axis.ticks = element_blank(),
+    axis.text.y = element_text(face = "bold"),
+    axis.title.y = element_blank()
+) + 
+  scale_x_continuous(breaks = scales::breaks_width(5))
+```
+
+## Total trips (stations)
+
+```{r}
+stations_summary %>% 
+  ggplot () +
+  geom_bar(aes(x = WKDAY_total_trips, y = station_name_clean), fill = "#04471C", stat = "identity") +
+  labs(
+    x = "Total bus trips stopping on a weekday",
+    title = "Stations by total bus trips on a weekday",
+    caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS"
+  ) +
+    theme_light() +
+  theme(
+    axis.line = element_line(linewidth = 0.75, color = "#04471C"),
+    panel.border = element_rect(linewidth = 0.55, color = "#16DB65", fill = "#82EDAD"),
+    panel.grid.major.y = element_line(color = "#E8F9EE"),
+    panel.grid.minor.y = element_line(color = "#C8F4D9"),
+    plot.title = element_text(size = 12, face = "bold"),
+    plot.caption = element_text(size = 8, face = "bold"),
+    axis.title = element_text(size = 10, face = "bold"),
+    axis.ticks = element_blank(),
+    axis.text.y = element_text(face = "bold"),
+    axis.title.y = element_blank()
+) + 
+  scale_x_continuous(breaks = scales::breaks_width(250))
+```
+
+## Trip change (stations)
+
+```{r}
+stations_summary %>% 
+  mutate(
+    wkday_to_saturday_trips = SAT_total_trips-WKDAY_total_trips,
+    wkday_to_sunday_trips = SUN_total_trips-WKDAY_total_trips,
+  ) %>% 
+  ggplot () +
+  geom_bar(aes(x = wkday_to_saturday_trips, y = station_name_clean, fill = "Saturday"), stat = "identity") +
+  geom_bar(aes(x = wkday_to_sunday_trips, y = station_name_clean, fill = "Sunday"), alpha = 0.5, stat = "identity") +
+  scale_fill_manual(
+    values = c("Saturday" = "#04471C",
+               "Sunday" = "#16DB65"),
+    aesthetics = "fill"
+  ) +
+  labs(
+    x = "Total bus trips lost from weekday to Saturday and Sunday schedules",
+    title = "Stations by difference in total bus trips from weekday to weekend",
+    caption = "Data from MCDOT Ride On and WMATA Metrobus GTFS",
+    fill = "Loss in trips from a weekday schedule to:"
+  ) +
+    theme_light() +
+  theme(
+    axis.line = element_line(linewidth = 0.75, color = "#04471C"),
+    panel.border = element_rect(linewidth = 0.55, color = "#16DB65", fill = "#82EDAD"),
+    panel.grid.major.y = element_line(color = "#E8F9EE"),
+    panel.grid.minor.y = element_line(color = "#C8F4D9"),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.position = c(0.3, 0.35),
+    legend.title = element_text(size = 10, face = "bold"),
+    legend.text = element_text(face = "bold"),
+    legend.background = element_rect(color ="#058C42"),
+    axis.title = element_text(size = 10, face = "bold"),
+    axis.ticks = element_blank(),
+    axis.text.y = element_text(face = "bold"),
+    axis.title.y = element_blank()
+) + 
+  scale_x_continuous(breaks = scales::breaks_width(100))
+```
